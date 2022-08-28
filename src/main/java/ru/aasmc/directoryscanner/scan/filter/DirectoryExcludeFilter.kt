@@ -1,6 +1,6 @@
 package ru.aasmc.directoryscanner.scan.filter
 
-import ru.aasmc.directoryscanner.input.DirectoryValidator
+import ru.aasmc.directoryscanner.input.PathValidator
 import java.nio.file.Path
 
 /**
@@ -9,7 +9,7 @@ import java.nio.file.Path
  */
 abstract class DirectoryExcludeFilter(
     protected val dirsToFilter: List<Path>,
-    private val validator: DirectoryValidator
+    private val validator: PathValidator
 ) : ExcludeFilter() {
 
     override fun isEmpty(): Boolean {

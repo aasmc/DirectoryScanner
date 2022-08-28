@@ -5,7 +5,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class DefaultInputParamsParser(
-    private val validator: DirectoryValidator
+    private val validator: PathValidator
 ) : InputParser {
 
     private val dirsToScan = mutableListOf<Path>()

@@ -1,11 +1,11 @@
 package ru.aasmc.directoryscanner.scan.filter
 
-import ru.aasmc.directoryscanner.input.DirectoryValidator
+import ru.aasmc.directoryscanner.input.PathValidator
 import java.nio.file.Path
 
 class DefaultDirectoryExcludeFilter(
     dirsToFilter: List<Path>,
-    validator: DirectoryValidator
+    validator: PathValidator
 ) : DirectoryExcludeFilter(dirsToFilter, validator) {
 
     override fun filterDirectory(path: Path): Boolean {

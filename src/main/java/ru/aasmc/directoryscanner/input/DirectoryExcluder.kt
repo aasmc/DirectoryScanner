@@ -8,7 +8,7 @@ import java.nio.file.Paths
 import java.util.regex.Pattern
 
 class DirectoryExcluder(
-    private val validator: DirectoryValidator
+    private val validator: PathValidator
 ) : Excluder() {
 
     private val KEY: String = "-"

@@ -23,10 +23,10 @@ class DefaultApplicationConfig : ApplicationConfig {
     }
 
     override fun inputParamsExcluders(): List<Excluder> {
-        return Collections.singletonList(DirectoryExcluder(SimpleDirectoryValidator()))
+        return Collections.singletonList(DirectoryExcluder(SimplePathValidator()))
     }
 
     override fun inputParamsParser(): InputParser {
-        return DefaultInputParamsParser(SimpleDirectoryValidator())
+        return DefaultInputParamsParser(SimplePathValidator())
     }
 }

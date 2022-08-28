@@ -1,5 +1,7 @@
-package ru.aasmc.directoryscanner.input
+package ru.aasmc.directoryscanner.input.excluder
 
+import ru.aasmc.directoryscanner.input.validator.PathValidator
+import ru.aasmc.directoryscanner.input.validator.patterns
 import ru.aasmc.directoryscanner.scan.filter.Filter
 import java.nio.file.Path
 import java.util.regex.Pattern

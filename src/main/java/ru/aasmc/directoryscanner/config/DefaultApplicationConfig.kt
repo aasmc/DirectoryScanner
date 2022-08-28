@@ -1,6 +1,9 @@
 package ru.aasmc.directoryscanner.config
 
-import ru.aasmc.directoryscanner.input.*
+import ru.aasmc.directoryscanner.input.excluder.PathExcluder
+import ru.aasmc.directoryscanner.input.parser.DefaultInputParamsParser
+import ru.aasmc.directoryscanner.input.parser.InputParser
+import ru.aasmc.directoryscanner.input.validator.SimplePathValidator
 import ru.aasmc.directoryscanner.output.format.DefaultFileFormatter
 import ru.aasmc.directoryscanner.output.format.FileFormatter
 import java.nio.charset.Charset
@@ -22,8 +25,13 @@ class DefaultApplicationConfig : ApplicationConfig {
         return DefaultFileFormatter(outputFilePath(), outputFileCharset())
     }
 
-    override fun inputParamsExcluders(): List<Excluder> {
-        return Collections.singletonList(DirectoryExcluder(SimplePathValidator()))
+    override fun inputParamsExcluders(): List<PathExcluder> {
+        return Collections.singletonList(
+            PathExcluder.DirectoryPathExcluder(
+                validator = SimplePathValidator(),
+                key = "-"
+            )
+        )
     }
 
     override fun inputParamsParser(): InputParser {

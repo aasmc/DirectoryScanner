@@ -2,8 +2,7 @@ package ru.aasmc.directoryscanner.scan
 
 import ru.aasmc.directoryscanner.exceptions.InitException
 import ru.aasmc.directoryscanner.output.FileProcessor
-import ru.aasmc.directoryscanner.scan.filter.DirectoryExcludeFilter
-import ru.aasmc.directoryscanner.scan.filter.FileExcludeFilter
+import ru.aasmc.directoryscanner.scan.filter.Filter
 import java.io.IOException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -14,8 +13,8 @@ import java.util.concurrent.RecursiveAction
 
 class DirectoryScanning(
     private val dir: Path,
-    private val dirExcludeFilters: List<DirectoryExcludeFilter>,
-    private val fileExcludeFilters: List<FileExcludeFilter>
+    private val dirExcludeFilters: List<Filter.DirectoryFilter>,
+    private val fileExcludeFilters: List<Filter.FileFilter>
 ) : RecursiveAction() {
 
     private val processor = FileProcessor
@@ -38,16 +37,16 @@ class DirectoryScanning(
                         return FileVisitResult.SKIP_SUBTREE
                     }
                     // check if need to scan the directory
-                    if (dir != this@DirectoryScanning.dir) {
+                    return if (dir != this@DirectoryScanning.dir) {
                         // if we don't need to scan, then create a sub-task for scanning
                         val w = DirectoryScanning(dir, dirExcludeFilters, fileExcludeFilters)
                         // start it in the same ForkJoinPool
                         w.fork()
                         scanningList.add(w)
-                        return FileVisitResult.SKIP_SUBTREE
+                        FileVisitResult.SKIP_SUBTREE
                     } else {
                         // if this is our directory, then scan it
-                        return FileVisitResult.CONTINUE
+                        FileVisitResult.CONTINUE
                     }
                 }
 

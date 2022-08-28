@@ -1,11 +1,9 @@
 package ru.aasmc.directoryscanner.scan
 
 import ru.aasmc.directoryscanner.exceptions.InitException
-import ru.aasmc.directoryscanner.input.ParseResult
+import ru.aasmc.directoryscanner.input.parser.ParseResult
 import ru.aasmc.directoryscanner.output.FileProcessor
-import ru.aasmc.directoryscanner.scan.filter.DirectoryExcludeFilter
-import ru.aasmc.directoryscanner.scan.filter.ExcludeFilter
-import ru.aasmc.directoryscanner.scan.filter.FileExcludeFilter
+import ru.aasmc.directoryscanner.scan.filter.Filter
 import java.nio.file.Path
 import java.util.concurrent.ForkJoinPool
 
@@ -13,8 +11,8 @@ object DirScanner {
     private var isInit = false
     private lateinit var dirForScan: List<Path>
 
-    private val dirExcludeFilters = mutableListOf<DirectoryExcludeFilter>()
-    private val fileExcludeFilters = mutableListOf<FileExcludeFilter>()
+    private val dirExcludeFilters = mutableListOf<Filter.DirectoryFilter>()
+    private val fileExcludeFilters = mutableListOf<Filter.FileFilter>()
 
     private val scanPool = ForkJoinPool(Runtime.getRuntime().availableProcessors())
 
@@ -24,22 +22,20 @@ object DirScanner {
         isInit = true
     }
 
-    private fun registerFilters(filters: List<ExcludeFilter>) {
+    private fun registerFilters(filters: List<Filter>) {
         filters.forEach(::registerFilter)
     }
 
-    private fun registerFilter(filter: ExcludeFilter) {
-        if (filter.isEmpty()) return
+    private fun registerFilter(filter: Filter) {
+
         when (filter) {
-            is DirectoryExcludeFilter -> {
+            is Filter.DirectoryFilter -> {
                 dirExcludeFilters.add(filter)
             }
-            is FileExcludeFilter -> {
+            is Filter.FileFilter -> {
                 fileExcludeFilters.add(filter)
             }
-            else -> {
-                throw IllegalArgumentException("[Dir Scanner] Error while registering filter. Filter has unknown type.")
-            }
+            is Filter.EmptyFilter -> return
         }
     }
 

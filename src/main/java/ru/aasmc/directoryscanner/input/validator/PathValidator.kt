@@ -1,4 +1,4 @@
-package ru.aasmc.directoryscanner.input
+package ru.aasmc.directoryscanner.input.validator
 
 import java.nio.file.Path
 import java.util.regex.Matcher

@@ -3,7 +3,7 @@ package ru.aasmc.directoryscanner
 import ru.aasmc.directoryscanner.config.ApplicationConfig
 import ru.aasmc.directoryscanner.exceptions.InitException
 import ru.aasmc.directoryscanner.exceptions.ValidationParamsException
-import ru.aasmc.directoryscanner.input.InputParser
+import ru.aasmc.directoryscanner.input.parser.InputParser
 import ru.aasmc.directoryscanner.output.FileProcessor
 import ru.aasmc.directoryscanner.output.Timer
 import ru.aasmc.directoryscanner.scan.DirScanner

@@ -1,8 +1,10 @@
-package ru.aasmc.directoryscanner.input
+package ru.aasmc.directoryscanner.input.parser
 
-import ru.aasmc.directoryscanner.exceptions.ValidationParamsException
+import ru.aasmc.directoryscanner.input.excluder.PathExcluder
+import ru.aasmc.directoryscanner.input.validator.PathValidator
+import ru.aasmc.directoryscanner.input.validator.patterns
+import ru.aasmc.directoryscanner.scan.filter.Filter
 import java.nio.file.Path
-import java.nio.file.Paths
 
 class DefaultInputParamsParser(
     private val validator: PathValidator
@@ -10,9 +12,9 @@ class DefaultInputParamsParser(
 
     private val dirsToScan = mutableListOf<Path>()
 
-    private val excluders = mutableListOf<Excluder>()
+    private val excluders = mutableListOf<PathExcluder>()
 
-    override fun registerExcluders(vararg excluders: Excluder) {
+    override fun registerExcluders(vararg excluders: PathExcluder) {
         this.excluders.addAll(excluders)
     }
 
@@ -22,7 +24,7 @@ class DefaultInputParamsParser(
      *         and a list of filters.
      */
     override fun parse(vararg params: String): ParseResult {
-        val excludedKeys = excluders.map(Excluder::getKey)
+        val excludedKeys = excluders.map(PathExcluder::key)
         val matchers = patterns.map { pattern ->
             pattern.matcher("")
         }
@@ -33,24 +35,13 @@ class DefaultInputParamsParser(
                 // so we bread the search for directories to scan.
                 break
             }
-            val isDir = matchers.any { matcher -> matcher.reset(param).matches() }
-            if (isDir) {
-                val dir = Paths.get(param)
-                if (!validator.doesExist(dir)) {
-                    throw ValidationParamsException("Directory \"$param\" doesn't exist", params)
-                }
+
+            validator.validateDirCorrect(
+                path = param,
+                params = params,
+                matchers = matchers
+            ) { dir ->
                 dirsToScan.add(dir)
-            } else {
-                throw ValidationParamsException(
-                    """
-                Input param \"$param\" has inappropriate format.
-                It should be an absolute WINDOWS or UNIX DIRECTORY path, 
-                i.e. it should end with "\" or "/".
-                Example 1: C:\ProgramFiles\
-                Example 2: /home/user/
-                """.trimIndent(),
-                    params
-                )
             }
         }
 
@@ -70,7 +61,7 @@ class DefaultInputParamsParser(
             }
         }
         // remove empty filters from the list
-        excludeFilters = excludeFilters.filterNot { it.isEmpty() }
+        excludeFilters = excludeFilters.filterNot { it is Filter.EmptyFilter }
         return ParseResult(dirsToScan, excludeFilters)
     }
 }

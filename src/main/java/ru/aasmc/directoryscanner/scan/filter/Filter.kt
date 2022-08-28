@@ -1,6 +1,6 @@
 package ru.aasmc.directoryscanner.scan.filter
 
-import ru.aasmc.directoryscanner.input.PathValidator
+import ru.aasmc.directoryscanner.input.validator.PathValidator
 import java.nio.file.Path
 
 sealed class Filter(open val validator: PathValidator? = null) {

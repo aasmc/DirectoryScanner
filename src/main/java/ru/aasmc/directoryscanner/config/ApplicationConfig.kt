@@ -1,7 +1,7 @@
 package ru.aasmc.directoryscanner.config
 
-import ru.aasmc.directoryscanner.input.Excluder
-import ru.aasmc.directoryscanner.input.InputParser
+import ru.aasmc.directoryscanner.input.parser.InputParser
+import ru.aasmc.directoryscanner.input.excluder.PathExcluder
 import ru.aasmc.directoryscanner.output.format.FileFormatter
 import java.nio.charset.Charset
 import java.nio.file.Path
@@ -18,7 +18,7 @@ interface ApplicationConfig {
 
     fun fileFormatter(): FileFormatter
 
-    fun inputParamsExcluders(): List<Excluder>
+    fun inputParamsExcluders(): List<PathExcluder>
 
     fun inputParamsParser(): InputParser
 

@@ -1,4 +1,4 @@
-package ru.aasmc.directoryscanner.input
+package ru.aasmc.directoryscanner.input.validator
 
 import ru.aasmc.directoryscanner.exceptions.ValidationParamsException
 import java.nio.file.Files

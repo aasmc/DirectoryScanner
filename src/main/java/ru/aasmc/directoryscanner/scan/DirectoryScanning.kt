@@ -38,16 +38,16 @@ class DirectoryScanning(
                         return FileVisitResult.SKIP_SUBTREE
                     }
                     // check if need to scan the directory
-                    if (dir != this@DirectoryScanning.dir) {
+                    return if (dir != this@DirectoryScanning.dir) {
                         // if we don't need to scan, then create a sub-task for scanning
                         val w = DirectoryScanning(dir, dirExcludeFilters, fileExcludeFilters)
                         // start it in the same ForkJoinPool
                         w.fork()
                         scanningList.add(w)
-                        return FileVisitResult.SKIP_SUBTREE
+                        FileVisitResult.SKIP_SUBTREE
                     } else {
                         // if this is our directory, then scan it
-                        return FileVisitResult.CONTINUE
+                        FileVisitResult.CONTINUE
                     }
                 }
 

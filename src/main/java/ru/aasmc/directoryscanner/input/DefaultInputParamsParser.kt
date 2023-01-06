@@ -30,7 +30,7 @@ class DefaultInputParamsParser(
             if (excludedKeys.contains(param)) {
                 // If the input parameter is a key, then the following parameter
                 // must be handled by oe of the Excluder's,
-                // so we bread the search for directories to scan.
+                // so we break the search for directories to scan.
                 break
             }
             val isDir = matchers.any { matcher -> matcher.reset(param).matches() }

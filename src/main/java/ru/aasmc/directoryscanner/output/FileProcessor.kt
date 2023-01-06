@@ -83,7 +83,7 @@ object FileProcessor {
         private val sortedFiles = ArrayList<File>()
 
         /**
-         * Blocking queue that stores pathes to files.
+         * Blocking queue that stores paths to files.
          */
         val filesQueue = LinkedBlockingQueue<String>()
 

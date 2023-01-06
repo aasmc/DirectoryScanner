@@ -1,6 +1,5 @@
 package ru.aasmc.directoryscanner.input
 
-import ru.aasmc.directoryscanner.input.DirectoryValidator
 import java.nio.file.Files
 import java.nio.file.Path
 

@@ -52,7 +52,7 @@ class DirectoryScanning(
 
                 override fun visitFile(file: Path, attrs: BasicFileAttributes?): FileVisitResult {
                     val process = fileExcludeFilters.none { f -> f.filter(file) }
-                    if (process) {
+                    if (process && Files.isRegularFile(file)) {
                         processor.process(file.toAbsolutePath().toString())
                     }
                     return FileVisitResult.CONTINUE

@@ -17,7 +17,7 @@ class Timer {
 
     fun start() {
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        scheduledExecutorService.scheduleAtFixedRate(timePrinting, 1000, 1000, TimeUnit.SECONDS)
+        scheduledExecutorService.scheduleAtFixedRate(timePrinting, 0, 1, TimeUnit.SECONDS)
         start = System.currentTimeMillis()
     }
 

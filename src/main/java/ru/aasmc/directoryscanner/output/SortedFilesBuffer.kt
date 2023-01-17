@@ -26,12 +26,13 @@ class SortedFilesBuffer(
 
     fun takeAll(): List<String> {
         val result = lines.toMutableList()
-        result.sortWith { l, r ->
-            l.compareTo(r, ignoreCase = true)
-        }
         lines = mutableListOf()
         currentSize = 0
         countOfElements = 0
+
+        result.sortWith { l, r ->
+            l.compareTo(r, ignoreCase = true)
+        }
         return result
     }
 

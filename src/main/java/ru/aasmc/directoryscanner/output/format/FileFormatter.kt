@@ -32,8 +32,8 @@ abstract class FileFormatter(
                 // main cycle that creates a sorted file
                 var filePath = reader.readLine()
                 while (filePath != null) {
-                    // read lines from a sorted file while there are any
-                    // every line is an absolute path to a found file
+                    // Read lines from a sorted file while there are any.
+                    // Every line is an absolute path to a found file
                     val path = Paths.get(filePath)
                     if (Files.exists(path)) { // If current file exists in the system at the time of writing
                         val attrs = Files.readAttributes(path, BasicFileAttributes::class.java)

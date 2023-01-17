@@ -7,10 +7,10 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class FileReader(
-    file: Path,
+    fileToRead: Path,
     charset: Charset
 ) : Closeable {
-    private val reader: BufferedReader = Files.newBufferedReader(file, charset)
+    private val reader: BufferedReader = Files.newBufferedReader(fileToRead, charset)
 
     fun readLine(): String? {
         return reader.readLine()

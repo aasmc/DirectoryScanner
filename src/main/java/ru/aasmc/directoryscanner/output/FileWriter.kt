@@ -11,11 +11,11 @@ import java.nio.file.StandardOpenOption.CREATE
 
 
 class FileWriter(
-    file: Path,
+    fileToWriteTo: Path,
     charset: Charset
 ) : Closeable {
     private val writer: PrintWriter = PrintWriter(
-        Files.newBufferedWriter(file, charset, CREATE, APPEND),
+        Files.newBufferedWriter(fileToWriteTo, charset, CREATE, APPEND),
         true
     )
 
